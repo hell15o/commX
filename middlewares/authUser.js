@@ -8,7 +8,7 @@ const userAuth = async (req, res, next) => {
       throw new Error("Token is not valid!");
     }
 
-    const decodedData = await jwt.verify(token, "devtinder@2006");
+    const decodedData = await jwt.verify(token, "commX@7");
 
     const { _id } = decodedData;
 
@@ -26,4 +26,4 @@ const userAuth = async (req, res, next) => {
   }
 };
 
-module.exports = { userAuth };
+module.exports = userAuth;

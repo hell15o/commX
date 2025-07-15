@@ -1,10 +1,3 @@
-// const User = require("../models/user.model.js")
-
-// const registerUser = async (req, res) =>{
-//     const user = req.body
-//     // console.log(user)
-// }
-
 const User = require("../models/user.model");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
