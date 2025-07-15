@@ -29,7 +29,7 @@ const registerUser = async (req, res) => {
 
     res.cookie("token", token);
 
-    res.json({ message: "User Added successfully!", data: savedUser });
+    return res.json({ message: "User Added successfully!", data: savedUser });
   } catch (err) {
     res.status(400).send("ERROR : " + err.message);
   }
