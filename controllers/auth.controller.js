@@ -1,7 +1,7 @@
 const User = require("../models/user.model");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-const validateSignUpData = require("../utils/validation");
+const { validateSignUpData } = require("../utils/validation");
 
 const registerUser = async (req, res) => {
   try {

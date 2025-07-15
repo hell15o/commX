@@ -28,17 +28,6 @@ const connectionRequest = async (req, res) => {
       return res.send("Connection request already exists!");
     }
 
-    // const validConnectionRequest = await User.find({
-    //   $or: [
-    //     { fromUserId, toUserId },
-    //     { fromUserId: toUserId, toUserId: fromUserId },
-    //   ],
-    // });
-
-    // if(validConnectionRequest) {
-    //     return res.send("Connection request already exist!")
-    // }
-
     const newConnectionRequest = new ConnectionRequestModel({
       fromUserId,
       toUserId,
@@ -55,15 +44,19 @@ const connectionRequest = async (req, res) => {
 
 const getConnectionRequests = async (req, res) => {
   const userId = req.user._id;
-  const user = await User.findById(userId);
-  if (!user) {
-    res.send("Invalid User");
-  }
+  // const user = await User.findById(userId);
+  // if (!user) {
+  //   res.send("Invalid User");
+  // }
 
   const pendingRequests = await ConnectionRequestModel.find({
     toUserId: userId,
     status: "pending",
   });
+
+  if (pendingRequests.length == 0) {
+    return res.send("No pending request found!");
+  }
 
   return res.json(pendingRequests);
 };
@@ -72,20 +65,30 @@ const getConnectionRequests = async (req, res) => {
 
 const acceptOrRejectConnectionRequests = async (req, res) => {
   const userId = req.user._id;
-  const user = User.findById(userId);
-  if (!user) {
-    return res.send("Invalid User");
-  }
+  // const user = User.findById(userId);
+  // if (!user) {
+  //   return res.send("Invalid User");
+  // }
+
+  // console.log(userId)
 
   const connectionRequestId = req.params.connectionId;
 
-  const connectionRequest = await ConnectionRequestModel.findById(
-    connectionRequestId
-  );
+  const connectionRequest = await ConnectionRequestModel.find({
+    _id: connectionRequestId,
+    toUserId: userId,
+  });
 
-  if (!connectionRequest) {
+  // console.log(connectionRequest);
+  // console.log(userId);
+
+  if (connectionRequest.length == 0) {
     return res.send("Invalid Connection ID");
   }
+
+  // if (!connectionRequest.toUserId.equals(userId)) {
+  //   return res.send(" you cannot update this request ");
+  // }
 
   const updatedStatus = req.params.status;
 
