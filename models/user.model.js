@@ -45,7 +45,7 @@ const userSchema = mongoose.Schema(
       enum: ["male", "female"],
     },
 
-    profilePictureURL: {
+    profileImageURL: {
       type: String,
     },
   },

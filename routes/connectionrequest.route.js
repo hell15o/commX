@@ -12,7 +12,7 @@ const router = express.Router();
 router.post("/send/:status/:toUserId", userAuth, connectionRequest);
 
 // api route to get all the pending connection requests of the user
-router.route("/getConnectionRequests").get(userAuth, getConnectionRequests);
+router.get("/getConnectionRequests", userAuth, getConnectionRequests);
 
 // api route to accept or reject the connection request
 router.patch(
@@ -20,6 +20,7 @@ router.patch(
   userAuth,
   acceptOrRejectConnectionRequests
 );
+
 
 module.exports = router;
 
